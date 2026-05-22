@@ -1,0 +1,15 @@
+/* src/index.css */
+@import "tailwindcss";
+
+@theme {
+  /* Palet Warna Ekologi Industri ZEUS */
+  --color-brand-bg: #0a221e;          /* Deep Emerald Black */
+  --color-brand-surface: #1f6f5f;     /* Dark Green dari user */
+  --color-brand-interactive: #2fa084; /* Medium Teal/Green dari user */
+  --color-brand-accent: #6fcf97;      /* Bright Green dari user */
+  --color-brand-light: #eeeeee;       /* Light Grey untuk teks utama dari user */
+  
+  --color-brand-muted: #a3b8b5;       /* Text sekunder melandai */
+  --color-brand-border: #2d8573;      /* Border tipis penyeimbang */
+  --color-brand-error: #ff6b6b;       /* Penanda error */
+}
