@@ -1,8 +1,10 @@
 // src/types/navigation.ts
-export type PageID = 'DASHBOARD' | 'PERANGKAT' | 'MARKETPLACE' | 'MAINTENANCE' | 'PENGATURAN';
+import { type LucideIcon } from 'lucide-react';
+export type PageID = 'DASHBOARD' | 'PERANGKAT' | 'MARKETPLACE' | 'MAINTENANCE' | 'SETTINGS';
+
 
 export interface MenuItem {
   id: PageID;
   label: string;
-  icon: string; // Kita gunakan string emoji/icon representatif sederhana
+  icon: LucideIcon; // Kita gunakan komponen LucideIcon sebagai representasi ikon
 }

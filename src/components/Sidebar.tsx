@@ -62,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, onPageChange, onL
                       : 'text-brand-muted hover:bg-brand-surface/40 hover:text-brand-light'}
                   `}
                 >
-                  <span className="text-base">{item.icon}</span>
+                  <item.icon className="text-base" />
                   {item.label}
                 </button>
               );

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Sidebar } from '../components/Sidebar';
 import type { PageID, MenuItem } from '../types/Navigations';
+import { LayoutDashboard, MonitorSmartphone, Store, Wrench, UserRoundCog } from 'lucide-react';
 
 interface TemplateProps {
   currentPage: PageID;
@@ -12,11 +13,11 @@ interface TemplateProps {
 
 // Konfigurasi daftar menu kustom (Sangat mudah ditambah link baru di sini)
 const APP_MENU: MenuItem[] = [
-  { id: 'DASHBOARD', label: 'Dashboard Utama', icon: '📊' },
-  { id: 'PERANGKAT', label: 'Perangkat Edge AI', icon: '⛃' },
-  { id: 'MARKETPLACE', label: 'Marketplace', icon: '🛒' },
-  { id: 'MAINTENANCE', label: 'Pemeliharaan', icon: '🛠' },
-  { id: 'PENGATURAN', label: 'Pengaturan', icon: '⚙' },
+  { id: 'DASHBOARD', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'PERANGKAT', label: 'Perangkat', icon: MonitorSmartphone },
+  { id: 'MARKETPLACE', label: 'Marketplace', icon: Store },
+  { id: 'MAINTENANCE', label: 'Pemeliharaan', icon: Wrench },
+  { id: 'SETTINGS', label: 'Pengaturan', icon: UserRoundCog }
 ];
 
 export const Template: React.FC<TemplateProps> = ({ currentPage, onPageChange, onLogout, children }) => {

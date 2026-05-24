@@ -30,6 +30,7 @@ export const AuthContainer: React.FC<AuthContainerProps> = ({ onAuthSuccess }) =
     nomorTelepon: '',
     email: '',
     namaPerusahaan: '',
+    password: ''
   });
 
   const [signInForm, setSignInForm] = useState<SignInData>({

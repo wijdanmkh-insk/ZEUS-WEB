@@ -5,6 +5,7 @@ export interface SignUpData {
   nomorTelepon: string;
   email: string;
   namaPerusahaan: string;
+  password: string;
 }
 
 export interface SignInData {
