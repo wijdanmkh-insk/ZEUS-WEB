@@ -1,8 +1,20 @@
 // src/pages/DevicesPage.tsx
 import React, { useState } from 'react';
-import type { DeviceItem } from '../types/Devices'
+import type { DeviceItem } from '../types/Devices';
+import { ConfirmModal } from '../components/ConfirmModal';
 
 export const DevicesPage: React.FC = () => {
+  // 1. PINDAHKAN STATE MODAL KE DALAM SINI (DI ATAS)
+  const [modalConfig, setModalConfig] = useState<{
+    isOpen: boolean;
+    deviceId: string;
+    deviceCode: string;
+  }>({
+    isOpen: false,
+    deviceId: '',
+    deviceCode: '',
+  });
+
   // Mock data awal: Daftar urutan perangkat yang sudah terhubung di sistem perusahaan
   const [devices, setDevices] = useState<DeviceItem[]>([
     { id: '1', nodeCode: 'ZEUS-ALPHA01', location: 'Lantai 1 - Lobi Utama', createdAt: '2026-05-10' },
@@ -22,7 +34,6 @@ export const DevicesPage: React.FC = () => {
     setError('');
     setSuccessMessage('');
 
-    // Validasi input
     if (!newNodeCode.trim() || !newLocation.trim()) {
       setError('Kode perangkat dan lokasi penempatan wajib diisi!');
       return;
@@ -33,52 +44,58 @@ export const DevicesPage: React.FC = () => {
       return;
     }
 
-    // Cek duplikasi kode node keras
     if (devices.some(d => d.nodeCode.toUpperCase() === newNodeCode.toUpperCase())) {
       setError('Kode perangkat ini sudah terdaftar di klaster sistem Anda.');
       return;
     }
 
     const newDevice: DeviceItem = {
-      id: Date.now().toString(), // Generator ID unik sederhana
+      id: Date.now().toString(),
       nodeCode: newNodeCode.toUpperCase().trim(),
       location: newLocation.trim(),
-      createdAt: new Date().toISOString().split('T')[0], // Tanggal hari ini (YYYY-MM-DD)
+      createdAt: new Date().toISOString().split('T')[0],
     };
 
     setDevices([...devices, newDevice]);
     setSuccessMessage(`Unit ${newDevice.nodeCode} berhasil diaktifkan di ${newDevice.location}.`);
     
-    // Reset form field
     setNewNodeCode('');
     setNewLocation('');
   };
 
-  // Handler Hapus / Putuskan Koneksi Perangkat
-  const handleRemoveDevice = (id: string, code: string) => {
-    const confirmDelete = window.confirm(`Apakah Anda yakin ingin memutuskan tautkan perangkat ${code}? Janitor tidak akan menerima data dari titik ini lagi.`);
+  // 2. TRIGGER UNTUK MEMBUKA MODAL POPUP
+  const handleRemoveDeviceTrigger = (id: string, code: string) => {
+    setModalConfig({
+      isOpen: true,
+      deviceId: id,
+      deviceCode: code,
+    });
+  };
+
+  // 3. FUNGSI EKSEKUSI HAPUS REAL SAAT USER KLIK "YA, PUTUSKAN" DI MODAL
+  const handleConfirmDelete = () => {
+    setDevices(devices.filter(device => device.id !== modalConfig.deviceId));
+    setSuccessMessage(`Koneksi node ${modalConfig.deviceCode} berhasil diputus.`);
     
-    if (confirmDelete) {
-      setDevices(devices.filter(device => device.id !== id));
-      setSuccessMessage(`Koneksi node ${code} berhasil diputus.`);
-    }
+    // Tutup kembali modalnya
+    setModalConfig({ isOpen: false, deviceId: '', deviceCode: '' });
   };
 
   return (
     <div className="space-y-6 my-10">
       {/* Header Halaman */}
       <div className="border-b border-brand-border/30 pb-4">
-        <h1 className="text-4xl font-bold text-brand-light">Manajemen Perangkat</h1>
-        <p className="text-xs text-brand-muted">Registrasi, deployment, dan monitoring lokasi sasis pintar ZEUS di seluruh area korporat.</p>
+        <h1 className="text-5xl font-bold text-brand-light">Manajemen Perangkat</h1>
+        <p className="text-sm text-brand-muted pt-4">Lihat semua perangkat yang terhubung ke server disini</p>
       </div>
 
-      {/* Grid Layout: Kiri Form Tambah, Kanan Daftar Manifes Perangkat */}
+      {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* PANEL BARAT (Kiri): Form Registrasi Node Baru */}
         <div className="bg-brand-surface/30 border border-brand-border/40 p-5 rounded-xl h-fit">
           <h3 className="text-sm font-bold uppercase tracking-wider text-brand-accent border-b border-brand-border/20 pb-2 mb-4">
-            + Registrasi Node Baru
+            + Registrasi Perangkat Baru
           </h3>
 
           {error && (
@@ -125,10 +142,10 @@ export const DevicesPage: React.FC = () => {
           </form>
         </div>
 
-        {/* PANEL TIMUR (Kanan): Manifes Urutan Perangkat yang Terhubung */}
+        {/* PANEL TIMUR (Kanan): Manifes Tabel */}
         <div className="lg:col-span-2 bg-brand-surface/20 border border-brand-border/30 rounded-xl overflow-hidden shadow-xl">
           <div className="px-5 py-4 bg-brand-surface/50 border-b border-brand-border/40 flex justify-between items-center">
-            <h3 className="text-sm font-bold tracking-wide uppercase text-brand-accent">Manifes Urutan Perangkat Terpasang</h3>
+            <h3 className="text-md font-bold tracking-wide uppercase text-brand-accent">Daftar Perangkat Terpasang</h3>
             <span className="text-[11px] bg-brand-interactive/20 text-brand-light border border-brand-border px-2.5 py-0.5 rounded-full font-mono">
               Total: {devices.length} Nodes
             </span>
@@ -136,7 +153,7 @@ export const DevicesPage: React.FC = () => {
 
           {devices.length === 0 ? (
             <div className="p-12 text-center text-brand-muted font-mono text-xs">
-              [WARNING] Tidak ada perangkat terdaftar. Janitor tidak dapat menerima antrean data sampah harian.
+              [WARNING] Tidak ada perangkat terdaftar.
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -153,7 +170,6 @@ export const DevicesPage: React.FC = () => {
                 <tbody className="divide-y divide-brand-border/20">
                   {devices.map((device, index) => (
                     <tr key={device.id} className="hover:bg-brand-surface/20 transition-colors">
-                      {/* Urutan Perangkat yang Ditambahkan */}
                       <td className="p-4 text-center font-mono font-bold text-brand-muted/70 bg-brand-bg/10">
                         {index + 1}
                       </td>
@@ -169,7 +185,8 @@ export const DevicesPage: React.FC = () => {
                       <td className="p-4 text-center">
                         <button
                           type="button"
-                          onClick={() => handleRemoveDevice(device.id, device.nodeCode)}
+                          // PERBAIKAN: Panggil handler pemicu modal di bawah ini
+                          onClick={() => handleRemoveDeviceTrigger(device.id, device.nodeCode)}
                           className="px-3 py-1 bg-brand-error/10 border border-brand-error/30 text-brand-error hover:bg-brand-error hover:text-brand-light rounded-md text-[11px] font-semibold cursor-pointer transition-all"
                         >
                           Putuskan Link
@@ -182,8 +199,19 @@ export const DevicesPage: React.FC = () => {
             </div>
           )}
         </div>
-
       </div>
+
+      {/* REUSABLE MODAL CONFIGURATION */}
+      <ConfirmModal
+        isOpen={modalConfig.isOpen}
+        title="Hapus Perangkat"
+        message={`Apakah Anda yakin ingin memutuskan tautan perangkat ${modalConfig.deviceCode}? Petugas janitor tidak akan menerima data kapasitas sisa HC-SR04 dari titik ${modalConfig.deviceCode} ini lagi.`}
+        confirmLabel="Ya, Putuskan"
+        cancelLabel="Batalkan"
+        variant="danger"
+        onConfirm={handleConfirmDelete} // Menggunakan fungsi handler konfirmasi baru
+        onCancel={() => setModalConfig({ ...modalConfig, isOpen: false })}
+      />
     </div>
   );
 };

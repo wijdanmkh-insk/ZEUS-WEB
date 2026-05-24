@@ -73,8 +73,8 @@ export const SettingsPage: React.FC = () => {
     <div className="space-y-6 my-10">
       {/* Header Halaman */}
       <div className="border-b border-brand-border/30 pb-4">
-        <h2 className="text-4xl font-bold text-brand-light">Pengaturan Sistem</h2>
-        <p className="text-xs text-brand-muted pt-4">Konfigurasi data legalitas perusahaan dan otentikasi keamanan administrator.</p>
+        <h2 className="text-5xl font-bold text-brand-light">Pengaturan Sistem</h2>
+        <p className="text-sm text-brand-muted pt-8">Konfigurasi data legalitas perusahaan dan otentikasi keamanan administrator.</p>
       </div>
 
       {/* Tampilan Pesan Feedback */}

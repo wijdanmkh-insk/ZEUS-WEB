@@ -40,16 +40,13 @@ export const DashboardPage: React.FC = () => {
 
   return (
     <>
-        <div className="space-y-6">
+        <div className="space-y-6 my-10">
           {/* Top Title */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-brand-border/30 pb-4">
             <div>
-              <h1 className="text-2xl font-bold text-brand-light">Dashboard Telemetri Kontainer</h1>
-              <p className="text-xs text-brand-muted">Monitoring kapasitas ruang sisa (HC-SR04) dan pencacah objek berbasis Visi Komputer.</p>
+              <h1 className="text-5xl font-bold text-brand-light">Dashboard</h1>
+              <p className="text-sm text-brand-muted pt-8">Untuk melihat kapasitas tempat sampah saat ini, silahkan lihat semuanya disini</p>
             </div>
-            <span className="text-xs bg-brand-surface border border-brand-border/60 px-3 py-1.5 rounded-lg text-brand-accent font-mono animate-pulse">
-              ● Live HC-SR04 Stream
-            </span>
           </div>
 
           {/* Grid Kartu Indikator Cepat (Logger Global Akumulatif) */}

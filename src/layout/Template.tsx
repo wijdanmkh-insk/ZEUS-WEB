@@ -15,7 +15,6 @@ interface TemplateProps {
 const APP_MENU: MenuItem[] = [
   { id: 'DASHBOARD', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'PERANGKAT', label: 'Perangkat', icon: MonitorSmartphone },
-  { id: 'MARKETPLACE', label: 'Marketplace', icon: Store },
   { id: 'MAINTENANCE', label: 'Pemeliharaan', icon: Wrench },
   { id: 'SETTINGS', label: 'Pengaturan', icon: UserRoundCog }
 ];

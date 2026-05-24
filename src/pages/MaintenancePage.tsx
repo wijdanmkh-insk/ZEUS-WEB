@@ -29,9 +29,9 @@ export const MaintenancePage: React.FC = () => {
     <div className="space-y-6 my-10">
       {/* Header Deskripsi */}
       <div className="border-b border-brand-border/30 pb-4">
-        <h2 className="text-4xl font-bold text-brand-light">Sistem Pemeliharaan Berkala</h2>
-        <p className="text-s text-brand-muted pt-4">
-          Sesuai SOP teknis, sasis Edge AI ZEUS wajib dikalibrasi dan dibersihkan setiap <b>3 bulan (90 hari)</b> guna menjaga akurasi deteksi model YOLOv8.
+        <h2 className="text-5xl font-bold text-brand-light">Maintenance Perangkat</h2>
+        <p className="text-sm text-brand-muted pt-8">
+            Monitor dan kelola jadwal pemeliharaan perangkat keras ZEUS untuk memastikan performa optimal dan mencegah kegagalan operasional.
         </p>
       </div>
 

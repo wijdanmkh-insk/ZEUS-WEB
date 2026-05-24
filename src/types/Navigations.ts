@@ -1,6 +1,6 @@
 // src/types/navigation.ts
 import { type LucideIcon } from 'lucide-react';
-export type PageID = 'DASHBOARD' | 'PERANGKAT' | 'MARKETPLACE' | 'MAINTENANCE' | 'SETTINGS';
+export type PageID = 'DASHBOARD' | 'PERANGKAT' | 'MAINTENANCE' | 'SETTINGS';
 
 
 export interface MenuItem {

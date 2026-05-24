@@ -1,5 +1,5 @@
 // src/types/dashboard.ts
-export type ActiveView = 'DASHBOARD' | 'PERANGKAT' | 'MARKETPLACE' | 'MAINTENANCE' | 'PENGATURAN';
+export type ActiveView = 'DASHBOARD' | 'PERANGKAT' | 'MAINTENANCE' | 'PENGATURAN';
 
 export interface SidebarMenuItem {
   id: ActiveView;
